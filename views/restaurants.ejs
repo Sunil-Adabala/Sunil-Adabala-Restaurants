@@ -1,0 +1,61 @@
+<%- include("partials/headers"); -%>
+
+<%# <nav class="navbar navbar-default" style="background-color:red">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand">Restaurants</a>
+    </div>
+    <div class="collapse navbar-collapse">
+
+      <ul class="nav navbar-nav navbar-right">
+        <li> <a href="/">Login</a></li>
+        <li> <a href="/">Sign Up</a></li>
+        <li> <a href="/">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav> %>
+
+
+
+<%# <h1>hey!</h1> %>
+<div class="container">
+
+  <header class="jumbotron" style="padding-top: 20px;">
+    <div class="container">
+      <h1>Restaurants</h1>
+      <p><a class="btn btn-primary btn-large" href="/restaurants/new">Add new restaurants</a></p>
+    </div>
+  </header>
+  <div class="row" style="display:flex;flex-wrap:wrap;">
+    <% restaurants.forEach(function(restaurants){%>
+    <div class="col-md-3 col-sm-6">
+      <div class="thumbnail">
+        <img src="<%=restaurants.image%>" />
+
+        <div class="caption">
+          <h4><%=restaurants.name%></h4>
+        </div>
+      </div>
+    </div>
+
+    <% }); %>
+  </div>
+
+
+
+  <%# <a href="/">landing</a> %>
+
+</div>
+
+
+<%# <form  action="/restaurants" method="post">
+  Rest:<input type="text" name="restraunt">
+  imagelink:<input type="text" name="imglink" value="">
+  <button type="submit" name="submit">submit</button>
+
+</form> %>
+
+
+
+<%- include("partials/footers"); -%>
