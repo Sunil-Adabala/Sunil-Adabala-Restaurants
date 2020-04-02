@@ -4,8 +4,17 @@
 <%# <h1>this is  a show page</h1> %>
 <div class="container">
   <h2><%=restaurant.name%></h2>
-  <img src="<%=restaurant.image%>" style = "width:40% ;height:50%; " alt="">
+  <img src="<%=restaurant.image%>" style="width:40% ;height:50%; " alt="">
   <p><%=restaurant.description%></p>
+
+  <% restaurant.comments.forEach(function(comment){%>
+  <p>
+    <strong><%=comment.author%></strong> - <%=comment.text%>
+
+  </p>
+
+  <%})%>
+  <a class = "btn btn-primary" href="<%=restaurant._id%>/comments/new">newcomment</a>
 
 </div>
 

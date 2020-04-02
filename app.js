@@ -4,6 +4,13 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mongoose = require('mongoose');
+var Restaurant = require("./models/restaurant")
+var seedDB = require("./seed")
+var Comment = require("./models/comment")
+
+
+seedDB();
+// console.log("============"+__dirname)
 // const bodyParser=require('body-parser');
 
 const app = express();
@@ -14,8 +21,8 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-app.use(express.static("public"));
-
+app.use(express.static(__dirname+"/public"));
+//
 // var restaurants = [{
 //     name: "paradise",
 //     image: "https://pixabay.com/get/57e8d6474d5aa814f1dc8460cf2934771438dbf85254794c712f7dd19f4e_340.jpg"
@@ -28,27 +35,21 @@ app.use(express.static("public"));
 
 //schema
 
-var restaurantSchema = new mongoose.Schema({
-  name: String,
-  image: String,
-  description:String
-})
 
-var Restaurant = mongoose.model("Restaurant", restaurantSchema);
-
-Restaurant.create(
-    {
-      name: "paradise",
-      image: "https://pixabay.com/get/57e8d6474d5aa814f1dc8460cf2934771438dbf85254794c70297ad19145_340.jpg",
-      description:"biryani is dope but has ghee in it!"
-    }, function(err, restaurant) {
-      if (err) {
-        console.log(err)
-      } else {
-        console.log("newly added restaurant :");
-        console.log(restaurant);
-      }
-    });
+//
+// Restaurant.create(
+//     {
+//       name: "paradise",
+//       image: "https://pixabay.com/get/57e8d6474d5aa814f1dc8460cf2934771438dbf85254794c70297ad19145_340.jpg",
+//       description:"biryani is dope but has ghee in it!"
+//     }, function(err, restaurant) {
+//       if (err) {
+//         console.log(err)
+//       } else {
+//         console.log("newly added restaurant :");
+//         console.log(restaurant);
+//       }
+//     });
 
 
     //TODO
@@ -75,7 +76,7 @@ Restaurant.create(
     });
 
         app.post("/restaurants", function(req, res) {
-          var name= req.body.restraunt;
+          var name= req.body.restaurant;
           var image= req.body.imglink;
           var description=req.body.desc;
 
@@ -106,17 +107,75 @@ Restaurant.create(
     app.get("/restaurants/:id",function(req,res){
       // console.log(req.params.id)
 
-      Restaurant.findById(req.params.id,function(err,foundrestaurant){
+      Restaurant.findById(req.params.id).populate("comments").exec(function(err,foundrestaurant){
         if(err){
           console.log(err)
         }else{
           // console.log(req.params.id)
-          // console.log(foundrestaurant)
+          console.log(foundrestaurant)
           res.render("show",{restaurant:foundrestaurant});
         }
-      })
+      });
+
       // res.render("show");
+    });
+
+    app.get("/restaurants/:id/comments/new",function(req,res){
+      Restaurant.findById(req.params.id,function(err,foundrestaurant){
+        if(err){
+          console.log(err)
+        }
+        else{
+          res.render("newcomment",{restaurant:foundrestaurant});
+        }
+
+      })
+
     })
+    // app.get("/restaurants/:id/comments/new",function(req,res){
+    //   Restaurant.findById(req.params.id,functions(err,foundrestaurant){
+    //
+    //   })
+    // })
+
+    app.post("/restaurants/:id/comments",function(req,res){
+      // var newComment = req.body.comment;
+      // Restaurant.create(newComment,function(err,newlycreated){
+      //   if(err){
+      //     console.log(err)
+      //   }
+      //   else{
+      //     console.log(newlycreated);
+      //     res.redirect("newcomments");
+      //
+      //   }
+      Restaurant.findById(req.params.id,function(err,restaurant){
+        if(err){
+          console.log("=+==========")
+          console.log(restaurant)
+          console.log(err);
+        }
+        else{
+          console.log(req.body.comment.text)
+          Comment.create(req.body.comment,function(err,comment){
+            if(err){
+              console.log(err)
+            }
+            else{
+              // console.log(restaurant)
+              restaurant.comments.push(comment);
+              restaurant.save();
+              res.redirect("/restaurants/"+restaurant._id);
+            }
+          })
+
+        }
+      })
+      })
+    //
+    // })
+
+
 
 
 
