@@ -26,11 +26,18 @@ router.post("/",isLoggedIn, function(req, res) {
   var name = req.body.restaurant;
   var image = req.body.imglink;
   var description = req.body.desc;
+  var author={
+    username:req.user.username,
+    id:req.user._id
+
+  }
+
 
   var newRestaurant = {
     name: name,
     image: image,
-    description: description
+    description: description,
+    author:author
   }
   Restaurant.create(newRestaurant, function(err, newlycreated) {
     if (err) {

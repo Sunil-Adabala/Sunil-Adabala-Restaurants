@@ -22,7 +22,7 @@ var commentRoutes = require("./routes/comments")
 var indexRoutes = require("./routes/index")
 
 
-seedDB();
+// seedDB(); //seed Database
 // console.log("============"+__dirname)
 // const bodyParser=require('body-parser');
 

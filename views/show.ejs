@@ -19,6 +19,7 @@
           <h4 class="float-md-right">Rs 200/person</h4>
           <h4><a href="#"><%=restaurant.name%></a></h4>
           <p style="margin-top:15px"><%=restaurant.description%></p>
+          <p>submitted by - <%=restaurant.author.username%></p>
         </div>
       </div>
       <hr><hr>
@@ -30,7 +31,7 @@
           <% restaurant.comments.forEach(function(comment){%>
         <div class="row">
         <div class ="col-md-12">
-        <strong><%=comment.author%></strong>
+        <strong><%=comment.author.username%></strong>
         <span class = "float-right">2 days ago</span>
           <p><%=comment.text%> </p>
           <%})%>

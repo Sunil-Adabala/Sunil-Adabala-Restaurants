@@ -25,16 +25,7 @@ router.get("/new",isLoggedIn, function(req, res) {
 // })
 
 router.post("/",isLoggedIn, function(req, res) {
-  // var newComment = req.body.comment;
-  // Restaurant.create(newComment,function(err,newlycreated){
-  //   if(err){
-  //     console.log(err)
-  //   }
-  //   else{
-  //     console.log(newlycreated);
-  //     res.redirect("newcomments");
-  //
-  //   }
+
   Restaurant.findById(req.params.id, function(err, restaurant) {
     if (err) {
       console.log("=+==========")
@@ -46,9 +37,15 @@ router.post("/",isLoggedIn, function(req, res) {
         if (err) {
           console.log(err)
         } else {
-          console.log(comment)
+          //add username and if to comment
+          comment.author.id = req.user._id
+          comment.author.username = req.user.username
+          console.log(comment);
+          comment.save();
           restaurant.comments.push(comment);
           restaurant.save();
+          console.log("====after save+====");
+          console.log(comment);
           res.redirect("/restaurants/" + restaurant._id);
         }
       })
