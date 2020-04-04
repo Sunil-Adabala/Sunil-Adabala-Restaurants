@@ -1,0 +1,29 @@
+<%- include("partials/headers"); -%>
+
+<%# <h1>Register</h1> %>
+<%# <form class="" action="/register" method="post">
+  username:<input type="text" name="username" value="" placeholder="username"><br>
+  password:<input type="password" name="password" value="" placeholder="password"> <br>
+<button type="submit" name="button">Register</button>
+<a href="/login">Login</a>
+
+</form> %>
+<div class="auth text-center">
+  <form class="form-signin" action="/register" method="post">
+        <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Please Register</h1>
+        <label for="inputUsername" class="sr-only">Username</label>
+        <input name="username" type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+        <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+      </form>
+      <a href="/login">Login</a>
+
+</div>
+
+
+
+<%- include("partials/footers"); -%>
