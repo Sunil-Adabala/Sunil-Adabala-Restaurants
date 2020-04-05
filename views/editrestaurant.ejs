@@ -1,0 +1,45 @@
+<%- include("partials/headers"); -%>
+
+<div class="container" style="width:30%;margin:0 auto;">
+  <header style="margin:10% 0 5% 0">
+    <h3 style="text-align:center">Edit <%=restaurant.name %></h3>
+  </header>
+<%# ?_method=PUT - will tell method-override to make a put req %>
+  <form action="/restaurants/<%=restaurant._id %>?_method=PUT" method="POST">
+    <div class="form-group">
+      <%# <label >Rest:</label> %>
+      <input type="text" name="restaurant[name]" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<%=restaurant.name %>">
+      <%# <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> %>
+    </div>
+    <div class="form-group">
+      <%# <label for="exampleInputPassword1">imagelink:</label> %>
+      <input type="text" name="restaurant[image]" class="form-control" id="exampleInputPassword1" value="<%=restaurant.image %>">
+    </div>
+    <div class="form-group">
+      <%# <label for="exampleInputPassword1">imagelink:</label> %>
+      <input type="text" name="restaurant[description]" class="form-control" id="exampleInputDesc" value="<%=restaurant.description %>">
+    </div>
+
+    <div style="text-align:center;">
+      <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+
+    </div>
+
+
+  </form>
+  <a href="/">landing</a>
+
+</div>
+
+
+
+<%# <form  action="/restaurants" method="post">
+  Rest:<input type="text" name="restraunt">
+  imagelink:<input type="text" name="imglink" value="">
+  <button type="submit" name="submit">submit</button>
+
+</form> %>
+
+
+
+<%- include("partials/footers"); -%>

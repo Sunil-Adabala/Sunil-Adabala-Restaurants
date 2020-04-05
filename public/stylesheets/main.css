@@ -12,3 +12,7 @@ hr{
 .caption-full{
   padding:9px 9px 12px 9px;
 }
+
+.deleteForm{
+  display:inline
+}

@@ -5,37 +5,56 @@
 <div class="container">
   <div class="row">
     <div class="col-md-3">
-      <p class = "lead">Restaurant</p>
+      <p class="lead">Restaurant</p>
       <div class="list-group">
-        <li class = "list-group-item active">Info 1</li>
-        <li class = "list-group-item">Info 2</li>
-        <li class = "list-group-item">Info 3</li>
+        <li class="list-group-item active">Info 1</li>
+        <li class="list-group-item">Info 2</li>
+        <li class="list-group-item">Info 3</li>
       </div>
     </div>
     <div class="col-md-9">
-      <div class="img-thumbnail" >
-        <img class = "img-fluid"src="<%=restaurant.image%>" style = "height:40%;margin-bottom:20px" alt="restaurant-image">
+      <div class="img-thumbnail">
+        <img class="img-fluid" src="<%=restaurant.image%>" style="height:40%;margin-bottom:20px" alt="restaurant-image">
         <div class="caption-full" style="">
           <h4 class="float-md-right">Rs 200/person</h4>
           <h4><a href="#"><%=restaurant.name%></a></h4>
           <p style="margin-top:15px"><%=restaurant.description%></p>
           <p>submitted by - <%=restaurant.author.username%></p>
+          <%# show buttons only if user is the owner of post %>
+
+          <% if((currentUser)&&(restaurant.author.id.equals(currentUser._id))){ %>
+          <a class="btn btn-warning" href="/restaurants/<%=restaurant._id%>/edit">Edit</a>
+          <form class="deleteForm" action="/restaurants/<%=restaurant._id%>?_method=DELETE" method="post">
+            <button class="btn btn-danger" type="submit" name="button">DELETE</button>
+
+          </form>
+          <% } %>
+
         </div>
       </div>
-      <hr><hr>
+      <hr>
+      <hr>
       <div class="card card-body bg-light">
         <div class="text-right">
-          <a class = "btn btn-primary" href="<%=restaurant._id%>/comments/new">newcomment</a>
+          <a class="btn btn-primary" href="<%=restaurant._id%>/comments/new">newcomment</a>
         </div>
         <hr>
-          <% restaurant.comments.forEach(function(comment){%>
+        <% restaurant.comments.forEach(function(comment){%>
         <div class="row">
-        <div class ="col-md-12">
-        <strong><%=comment.author.username%></strong>
-        <span class = "float-right">2 days ago</span>
-          <p><%=comment.text%> </p>
-          <%})%>
-         </div>
+          <div class="col-md-12">
+            <strong><%=comment.author.username%></strong>
+            <span class="float-right">2 days ago</span>
+            <p><%=comment.text%> </p>
+
+            <% if((currentUser)&&(comment.author.id.equals(currentUser._id))){ %>
+            <a class="btn btn-sm btn-warning" style="display:inline" href="/restaurants/<%=restaurant._id%>/comments/<%=comment._id%>/edit">Edit</a>
+            <form class="deleteForm" action="/restaurants/<%=restaurant._id%>/comments/<%=comment._id%>?_method=DELETE" method="post">
+              <button class="btn btn-sm btn-danger" type="submit" name="button">DELETE</button>
+            </form>
+            <% } %>
+            <%})%>
+
+          </div>
 
 
 

@@ -4,9 +4,10 @@ var Restaurant = require("../models/restaurant")
 var Comment = require("../models/comment")
 var User = require("../models/user")
 const passport = require('passport')
+var middleware = require("../middleware")
 
 //root route
-router.get("/",isLoggedIn, function(req, res) {
+router.get("/",middleware.isLoggedIn, function(req, res) {
   res.render("landing");
 });
 
@@ -56,11 +57,5 @@ router.get("/logout",function(req,res){
   res.redirect("/login")
 })
 
-function isLoggedIn(req,res,next){
-  if(req.isAuthenticated()){
-    return next();
 
-  }
-  res.redirect("/login");
-}
 module.exports = router
