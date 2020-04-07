@@ -11,6 +11,7 @@
         <li class="list-group-item">Info 2</li>
         <li class="list-group-item">Info 3</li>
       </div>
+      <div id="map"></div>
     </div>
     <div class="col-md-9">
       <div class="img-thumbnail">
@@ -76,7 +77,30 @@
 
 
 </div>
-
-
-
+<script>
+function initMap() {
+  var lat = <%=restaurant.lat %>;
+  var lng = <%=restaurant.lng%>;
+  var center = {lat: lat, lng: lng};
+  var map = new google.maps.Map(
+      document.getElementById('map'), {zoom: 8, center: center,scrollwheel:flase});
+  var contentString = <strong><%=restaurant.name%> </br><%=restaurant.location%></strong>
+  <p>
+  <%=restaurant.description%>
+  </p>
+  var infowindow = new google.maps.infowindow({content:contentString});
+  var marker = new google.maps.Marker({position: uluru, map: map});
+  marker.addListener('click',function(){
+    infowindow.open(map,marker);
+  });
+}
+    </script>
+    <!--Load the API from the specified URL
+    * The async attribute allows the browser to render the page while the API loads
+    * The key parameter will contain your own API key (which is not needed for this tutorial)
+    * The callback parameter executes the initMap() function
+    -->
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB46SpB3ltZZDIzn3dq68BP5pkV6jyUwmI&callback=initMap">
+    </script>
 <%- include("partials/footers"); -%>

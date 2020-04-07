@@ -7,22 +7,27 @@
 <%# ?_method=PUT - will tell method-override to make a put req %>
   <form action="/restaurants/<%=restaurant._id %>?_method=PUT" method="POST">
     <div class="form-group">
-      <%# <label >Rest:</label> %>
-      <input type="text" name="restaurant[name]" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<%=restaurant.name %>">
+      <label for="exampleInputName">Restaurant name:</label>
+      <input type="text" name="restaurant[name]" class="form-control" id="exampleInputName" aria-describedby="emailHelp" value="<%=restaurant.name %>">
       <%# <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> %>
     </div>
     <div class="form-group">
-      <%# <label for="exampleInputPassword1">imagelink:</label> %>
-      <input type="text" name="restaurant[image]" class="form-control" id="exampleInputPassword1" value="<%=restaurant.image %>">
+      <label for="exampleInputimage">Image:</label>
+      <input type="text" name="restaurant[image]" class="form-control" id="exampleInputimage" value="<%=restaurant.image %>">
     </div>
     <div class="form-group">
-      <%# <label for="exampleInputPassword1">imagelink:</label> %>
+      <label for=exampleInputDesc">Description:</label>
       <input type="text" name="restaurant[description]" class="form-control" id="exampleInputDesc" value="<%=restaurant.description %>">
     </div>
+
     <div class="form-group">
-      <%# <label for="exampleInputPassword1">imagelink:</label> %>
+      <label for="exampleInputprice">Price:</label>
       <input type="number" name="restaurant[price]" class="form-control" id="exampleInputprice" value="<%=restaurant.price %>" min ="200" step = "50">
     </div>
+    <div class="form-group">
+      <label for="location">Location:</label>
+    <input class="form-control" type="text" name="location" id="location" value="<%= restaurant.location %>">
+</div>
 
     <div style="text-align:center;">
       <button type="submit" name="submit" class="btn btn-primary">Submit</button>
