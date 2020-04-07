@@ -16,12 +16,14 @@ middlewareObj.checkRestaurantOwner = function(req, res, next) {
           // res.render("editrestaurants",{restaurant:foundRestaurant})
           next();
         } else {
+          req.flash("error","No permission bro")
           res.redirect("back");
         }
 
       }
     })
   } else {
+    req.flash("error","you need to be logged in")
     res.redirect("back");
   }
 }
@@ -31,6 +33,7 @@ middlewareObj.checkCommentOwner = function(req, res, next) {
     Comment.findById(req.params.comment_id, function(err, foundComment) {
       if (err) {
         console.log(err)
+        req.flash("error","campground not found")
         res.redirect("back")
       } else {
         if (foundComment.author.id.equals(req.user._id)) {
@@ -41,6 +44,7 @@ middlewareObj.checkCommentOwner = function(req, res, next) {
       }
     })
   } else {
+    req.flash("error","No permission bro!")
     res.redirect("back");
   }
 }
@@ -49,6 +53,7 @@ middlewareObj.isLoggedIn = function(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   }
+  req.flash("error","You need to login first!")
   res.redirect("/login");
 }
 

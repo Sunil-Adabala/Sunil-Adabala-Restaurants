@@ -32,6 +32,7 @@ router.post("/",middleware.isLoggedIn, function(req, res) {
       console.log("=+==========")
       console.log(restaurant)
       console.log(err);
+      req.flash("error","Something went wrong")
     } else {
       console.log(req.body.comment.text)
       Comment.create(req.body.comment, function(err, comment) {
@@ -47,6 +48,7 @@ router.post("/",middleware.isLoggedIn, function(req, res) {
           restaurant.save();
           console.log("====after save+====");
           console.log(comment);
+          req.flash("success","Added comment successfully!!");
           res.redirect("/restaurants/" + restaurant._id);
         }
       })
@@ -93,9 +95,11 @@ router.delete("/:comment_id",middleware.checkCommentOwner,function(req,res){
   Comment.findByIdAndRemove(req.params.comment_id,function(err){
     if(err){
       console.log(err)
+      req.flash("error","Something went wrong!")
       res.redirect("/restaurants/"+req.params.id)
     }
     else{
+      req.flash("success","Comment deleted")
       res.redirect("/restaurants/"+req.params.id)
     }
   })

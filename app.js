@@ -11,6 +11,7 @@ const passport = require('passport')
 const LocalStrategy = require("passport-local");
 const passportLocalMongoose = require("passport-local-mongoose")
 const methodOverride = require("method-override"); // to do a put request and del request
+const flash = require("connect-flash") //for flash messsages
 
 var Restaurant = require("./models/restaurant")
 var seedDB = require("./seed")
@@ -39,6 +40,7 @@ app.use(require("express-session")({
 
 app.set('view engine', 'ejs');
 app.use(methodOverride("_method"));
+app.use(flash())
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.urlencoded({
@@ -53,7 +55,9 @@ passport.deserializeUser(User.deserializeUser());
 
 //allows to have currentuser info available to every template
 app.use(function(req,res,next){
-  res.locals.currentUser= req.user;
+  res.locals.currentUser= req.user;//make available CurrentUser for every template
+  res.locals.error = req.flash("error") //make available error for every template
+  res.locals.success = req.flash("success")//make available  success  for every template
   next();
 })
 

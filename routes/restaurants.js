@@ -25,6 +25,7 @@ router.get("/", function(req, res) {
 //CREATE REst route
 router.post("/",middleware.isLoggedIn, function(req, res) {
   var name = req.body.restaurant;
+  var price = req.body.price
   var image = req.body.imglink;
   var description = req.body.desc;
   var author={
@@ -37,6 +38,7 @@ router.post("/",middleware.isLoggedIn, function(req, res) {
   var newRestaurant = {
     name: name,
     image: image,
+    price:price,
     description: description,
     author:author
   }

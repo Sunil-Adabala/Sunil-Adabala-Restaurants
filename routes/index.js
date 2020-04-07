@@ -28,9 +28,11 @@ router.post("/register", function(req, res) {
     if (err) {
       console.log(err)
       console.log("==========")
+      req.flash("error",err.message)
       return res.render('register')
     }
     passport.authenticate("local")(req, res, function() {
+      req.flash("success","Succesfully registered")
       res.redirect("/login")
     })
   })
@@ -49,11 +51,13 @@ router.post("/login",passport.authenticate("local",{
   successRedirect:"/restaurants",
   failureRedirect:"/login"
 }),function(req,res){
+  req.flash("success","Welcome to Restaurants ,"+user.name+"!");
 })
 
 //logout route
 router.get("/logout",function(req,res){
   req.logout(); //passport logs the user out deletes all the sessions
+  req.flash("success","Succesfully logged out")
   res.redirect("/login")
 })
 
